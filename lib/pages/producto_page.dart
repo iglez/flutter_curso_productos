@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_curso_productos/utils/utils.dart' as utils;
 
 class ProductoPage extends StatelessWidget {
-  const ProductoPage({Key key}) : super(key: key);
+  // const ProductoPage({Key key}) : super(key: key);
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class ProductoPage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15.0),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 _crearNombre(),
@@ -72,9 +75,11 @@ class ProductoPage extends StatelessWidget {
       ),
       color: Colors.deepPurple,
       textColor: Colors.white,
-      onPressed: () {},
+      onPressed: _submit,
       icon: Icon(Icons.save),
       label: Text('Guardar'),
     );
   }
+
+  void _submit() {}
 }
