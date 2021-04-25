@@ -40,6 +40,13 @@ class ProductoPage extends StatelessWidget {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Producto'),
+      validator: (String value) {
+        if (value.length < 3) {
+          return 'Ingrese el nombre del producto';
+        }
+        
+        return null;
+      },
     );
   }
 
