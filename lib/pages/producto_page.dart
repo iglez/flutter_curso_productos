@@ -19,6 +19,11 @@ class ProductoPage extends StatelessWidget {
           ),
         ],
       ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(15.0),
+        ),
+      ),
     );
   }
 }
