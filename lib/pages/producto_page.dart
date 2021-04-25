@@ -53,6 +53,7 @@ class _ProductoPageState extends State<ProductoPage> {
       initialValue: producto.titulo,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Producto'),
+      onSaved: (value) => producto.titulo = value,
       validator: (String value) {
         if (value.length < 3) {
           return 'Ingrese el nombre del producto';
@@ -68,6 +69,7 @@ class _ProductoPageState extends State<ProductoPage> {
       initialValue: producto.precio.toString(),
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(labelText: 'Precio'),
+      onSaved: (value) => producto.precio = double.parse(value),
       validator: (String value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -98,6 +100,10 @@ class _ProductoPageState extends State<ProductoPage> {
       return null;
     }
 
+    formKey.currentState.save();
+
     print('Listo');
+    print(producto.titulo);
+    print(producto.precio);
   }
 }
