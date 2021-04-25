@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_curso_productos/utils/utils.dart' as utils;
 
-class ProductoPage extends StatelessWidget {
+class ProductoPage extends StatefulWidget {
   // const ProductoPage({Key key}) : super(key: key);
 
+  @override
+  _ProductoPageState createState() => _ProductoPageState();
+}
+
+class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -81,5 +86,13 @@ class ProductoPage extends StatelessWidget {
     );
   }
 
-  void _submit() {}
+  void _submit() {
+    bool isValidForm = formKey.currentState.validate();
+
+    if (!isValidForm) {
+      return null;
+    }
+
+    print('Listo');
+  }
 }
