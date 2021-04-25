@@ -25,12 +25,30 @@ class ProductoPage extends StatelessWidget {
           child: Form(
             child: Column(
               children: [
-                // _crearNombre(),
-                // _crearPrecio(),
+                _crearNombre(),
+                _crearPrecio(),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _crearNombre() {
+    return TextFormField(
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(
+        labelText: 'Producto'
+      ),
+    );
+  }
+  
+  Widget _crearPrecio() {
+    return TextFormField(
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      decoration: InputDecoration(
+        labelText: 'Precio'
       ),
     );
   }
