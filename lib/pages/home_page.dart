@@ -9,6 +9,15 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home page'),
       ),
+      body: Container(),
+      floatingActionButton: _crearBoton( context ),
+    );
+  }
+
+  Widget _crearBoton(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () => Navigator.pushNamed(context, 'producto'),
     );
   }
 }
