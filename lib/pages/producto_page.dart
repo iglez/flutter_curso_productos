@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_curso_productos/utils/utils.dart' as utils;
 
 class ProductoPage extends StatelessWidget {
   const ProductoPage({Key key}) : super(key: key);
@@ -44,7 +45,7 @@ class ProductoPage extends StatelessWidget {
         if (value.length < 3) {
           return 'Ingrese el nombre del producto';
         }
-        
+
         return null;
       },
     );
@@ -54,6 +55,13 @@ class ProductoPage extends StatelessWidget {
     return TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(labelText: 'Precio'),
+      validator: (String value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        }
+
+        return 'El precio debe de ser un numero';
+      },
     );
   }
 
