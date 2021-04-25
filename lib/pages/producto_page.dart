@@ -27,6 +27,7 @@ class ProductoPage extends StatelessWidget {
               children: [
                 _crearNombre(),
                 _crearPrecio(),
+                _crearBoton(),
               ],
             ),
           ),
@@ -38,18 +39,27 @@ class ProductoPage extends StatelessWidget {
   Widget _crearNombre() {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
-      decoration: InputDecoration(
-        labelText: 'Producto'
-      ),
+      decoration: InputDecoration(labelText: 'Producto'),
     );
   }
-  
+
   Widget _crearPrecio() {
     return TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        labelText: 'Precio'
+      decoration: InputDecoration(labelText: 'Precio'),
+    );
+  }
+
+  Widget _crearBoton() {
+    return RaisedButton.icon(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
       ),
+      color: Colors.deepPurple,
+      textColor: Colors.white,
+      onPressed: () {},
+      icon: Icon(Icons.save),
+      label: Text('Guardar'),
     );
   }
 }
