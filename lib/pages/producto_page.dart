@@ -12,6 +12,7 @@ class ProductoPage extends StatefulWidget {
 
 class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
+  final scapffoldKey = GlobalKey<ScaffoldState>();
   final prodProvider = new ProductosProvider();
 
   ProductoModel producto = ProductoModel();
@@ -25,6 +26,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Scaffold(
+      key: scapffoldKey,
       appBar: AppBar(
         title: Text('Producto'),
         actions: [
@@ -129,11 +131,21 @@ class _ProductoPageState extends State<ProductoPage> {
     print(producto.precio);
     print(producto.disponible);
 
-    if( producto.id == null ) {
+    if (producto.id == null) {
       prodProvider.crearProducto(producto);
     } else {
       prodProvider.modificarProducto(producto);
     }
-    
+
+    mostrarSnackbar('Registro guardado');
+  }
+
+  void mostrarSnackbar(String mensaje) {
+    final snackbar = SnackBar(
+      content: Text(mensaje),
+      duration: Duration(milliseconds: 1500),
+    );
+
+    scapffoldKey.currentState.showSnackBar(snackbar);
   }
 }
