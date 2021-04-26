@@ -24,13 +24,20 @@ class ProductosProvider {
 
     final resp = await http.get(url);
     final Map<String, dynamic> decodedData = json.decode(resp.body);
+    final List<ProductoModel> productos = List();
 
     if (decodedData == null) return [];
 
     decodedData.forEach((key, value) {
-      print(key);
+      // print(key);
+      // print(value);
+      final prodTemp = ProductoModel.fromJson(value);
+      prodTemp.id = key;
+      productos.add(prodTemp);
     });
 
-    return [];
+    print(productos.first.id);
+
+    return productos;
   }
 }
