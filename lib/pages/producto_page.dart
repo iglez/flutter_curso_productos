@@ -16,6 +16,7 @@ class _ProductoPageState extends State<ProductoPage> {
   final prodProvider = new ProductosProvider();
 
   ProductoModel producto = ProductoModel();
+  bool _guardando = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,7 @@ class _ProductoPageState extends State<ProductoPage> {
       ),
       color: Colors.deepPurple,
       textColor: Colors.white,
-      onPressed: _submit,
+      onPressed: (_guardando) ? null : _submit,
       icon: Icon(Icons.save),
       label: Text('Guardar'),
     );
@@ -126,10 +127,9 @@ class _ProductoPageState extends State<ProductoPage> {
 
     formKey.currentState.save();
 
-    print('Listo');
-    print(producto.titulo);
-    print(producto.precio);
-    print(producto.disponible);
+    setState(() {
+      _guardando = true;  
+    });
 
     if (producto.id == null) {
       prodProvider.crearProducto(producto);
@@ -138,6 +138,10 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     mostrarSnackbar('Registro guardado');
+
+    setState(() {
+      _guardando = false;  
+    });
   }
 
   void mostrarSnackbar(String mensaje) {
