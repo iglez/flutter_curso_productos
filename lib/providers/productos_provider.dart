@@ -23,9 +23,13 @@ class ProductosProvider {
     final url = '$_url/productos.json';
 
     final resp = await http.get(url);
-    final decodedData = json.decode(resp.body);
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
 
-    print(decodedData);
+    if (decodedData == null) return [];
+
+    decodedData.forEach((key, value) {
+      print(key);
+    });
 
     return [];
   }
