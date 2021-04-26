@@ -35,7 +35,14 @@ class HomePage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-        return Container();
+        List<ProductoModel> productos = snapshot.data;
+
+        return ListView.builder(
+          itemCount: productos.length,
+          itemBuilder: (_, i) {
+            return Container();
+          },
+        );
       },
     );
   }
