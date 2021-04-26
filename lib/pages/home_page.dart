@@ -39,11 +39,16 @@ class HomePage extends StatelessWidget {
 
         return ListView.builder(
           itemCount: productos.length,
-          itemBuilder: (_, i) {
-            return Container();
-          },
+          itemBuilder: (_, i) => _crearItem(productos[i]),
         );
       },
+    );
+  }
+
+  Widget _crearItem(ProductoModel prod) {
+    return ListTile(
+      title: Text('${prod.titulo} - ${prod.precio}'),
+      subtitle: Text('${prod.id}'),
     );
   }
 }
