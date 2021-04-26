@@ -129,6 +129,11 @@ class _ProductoPageState extends State<ProductoPage> {
     print(producto.precio);
     print(producto.disponible);
 
-    prodProvider.crearProducto(producto);
+    if( producto.id == null ) {
+      prodProvider.crearProducto(producto);
+    } else {
+      prodProvider.modificarProducto(producto);
+    }
+    
   }
 }

@@ -20,7 +20,7 @@ class ProductosProvider {
 
   Future<bool> modificarProducto(ProductoModel producto) async {
     // https://flutter-curso-5f131-default-rtdb.firebaseio.com/productos
-    final url = '$_url/productos.json';
+    final url = '$_url/productos/${producto.id}.json';
 
     final resp = await http.put(url, body: productoModelToJson(producto));
     final decodedDaata = json.decode(resp.body);
@@ -40,8 +40,8 @@ class ProductosProvider {
     if (decodedData == null) return [];
 
     decodedData.forEach((key, value) {
-      // print(key);
-      // print(value);
+      print(key);
+      print(value);
       final prodTemp = ProductoModel.fromJson(value);
       prodTemp.id = key;
       productos.add(prodTemp);
