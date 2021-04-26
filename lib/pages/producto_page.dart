@@ -118,7 +118,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     bool isValidForm = formKey.currentState.validate();
 
     if (!isValidForm) {
@@ -128,20 +128,23 @@ class _ProductoPageState extends State<ProductoPage> {
     formKey.currentState.save();
 
     setState(() {
-      _guardando = true;  
+      _guardando = true;
     });
 
     if (producto.id == null) {
-      prodProvider.crearProducto(producto);
+      await prodProvider.crearProducto(producto);
     } else {
-      prodProvider.modificarProducto(producto);
+      await prodProvider.modificarProducto(producto);
     }
 
     mostrarSnackbar('Registro guardado');
 
     setState(() {
-      _guardando = false;  
+      _guardando = false;
     });
+
+    prodProvider.cargarProductos();
+    Navigator.pop(context);
   }
 
   void mostrarSnackbar(String mensaje) {
