@@ -18,6 +18,17 @@ class ProductosProvider {
     return true;
   }
 
+  Future<bool> modificarProducto(ProductoModel producto) async {
+    // https://flutter-curso-5f131-default-rtdb.firebaseio.com/productos
+    final url = '$_url/productos.json';
+
+    final resp = await http.put(url, body: productoModelToJson(producto));
+    final decodedDaata = json.decode(resp.body);
+
+    print(decodedDaata);
+    return true;
+  }
+
   Future<List<ProductoModel>> cargarProductos() async {
     // https://flutter-curso-5f131-default-rtdb.firebaseio.com/productos
     final url = '$_url/productos.json';
