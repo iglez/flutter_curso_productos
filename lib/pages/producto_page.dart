@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_curso_productos/utils/utils.dart' as utils;
 
-class ProductoPage extends StatelessWidget {
-  const ProductoPage({Key key}) : super(key: key);
+class ProductoPage extends StatefulWidget {
+  // const ProductoPage({Key key}) : super(key: key);
+
+  @override
+  _ProductoPageState createState() => _ProductoPageState();
+}
+
+class _ProductoPageState extends State<ProductoPage> {
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +31,7 @@ class ProductoPage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15.0),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 _crearNombre(),
@@ -40,6 +49,13 @@ class ProductoPage extends StatelessWidget {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Producto'),
+      validator: (String value) {
+        if (value.length < 3) {
+          return 'Ingrese el nombre del producto';
+        }
+
+        return null;
+      },
     );
   }
 
@@ -47,6 +63,13 @@ class ProductoPage extends StatelessWidget {
     return TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(labelText: 'Precio'),
+      validator: (String value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        }
+
+        return 'El precio debe de ser un numero';
+      },
     );
   }
 
@@ -57,9 +80,19 @@ class ProductoPage extends StatelessWidget {
       ),
       color: Colors.deepPurple,
       textColor: Colors.white,
-      onPressed: () {},
+      onPressed: _submit,
       icon: Icon(Icons.save),
       label: Text('Guardar'),
     );
+  }
+
+  void _submit() {
+    bool isValidForm = formKey.currentState.validate();
+
+    if (!isValidForm) {
+      return null;
+    }
+
+    print('Listo');
   }
 }
