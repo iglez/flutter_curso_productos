@@ -170,34 +170,22 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Image(
-      image: AssetImage(_foto?.path ?? 'assets/no-image.png'),
-      height: 300.0,
-      fit: BoxFit.cover
-    );
+        image: AssetImage(_foto?.path ?? 'assets/no-image.png'),
+        height: 300.0,
+        fit: BoxFit.cover);
   }
 
   _seleccionarFoto() async {
-    final pickedFile = await _picker.getImage(
-      source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      _foto = File(pickedFile.path);
-    } else {
-      print('No image selected.');
-      return;
-    }
-
-    if (_foto == null) {
-      producto.fotoUrl = null;
-    }
-
-    setState(() {});
+    _procesarImagen(ImageSource.gallery);
   }
 
   _tomarFoto() async {
+    _procesarImagen(ImageSource.camera);
+  }
+
+  _procesarImagen(ImageSource origen) async {
     final pickedFile = await _picker.getImage(
-      source: ImageSource.camera,
+      source: origen,
     );
 
     if (pickedFile != null) {
@@ -213,5 +201,4 @@ class _ProductoPageState extends State<ProductoPage> {
 
     setState(() {});
   }
-  
 }
