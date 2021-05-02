@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter_curso_productos/models/producto_model.dart';
 import 'package:flutter_curso_productos/providers/productos_provider.dart';
 import 'package:flutter_curso_productos/utils/utils.dart' as utils;
@@ -14,6 +18,7 @@ class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final scapffoldKey = GlobalKey<ScaffoldState>();
   final prodProvider = new ProductosProvider();
+  File _foto;
 
   ProductoModel producto = ProductoModel();
   bool _guardando = false;
@@ -33,11 +38,11 @@ class _ProductoPageState extends State<ProductoPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: () {},
+            onPressed: _seleccionarFoto,
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: () {},
+            onPressed: _tomarFoto,
           ),
         ],
       ),
@@ -155,4 +160,27 @@ class _ProductoPageState extends State<ProductoPage> {
 
     scapffoldKey.currentState.showSnackBar(snackbar);
   }
+
+  _seleccionarFoto() async {
+    final _picker = ImagePicker();
+
+    final pickedFile = await _picker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      _foto = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+      return;
+    }
+
+    if (_foto != null) {
+      producto.fotoUrl = null;
+    }
+
+    setState(() {});
+  }
+
+  _tomarFoto() {}
 }
