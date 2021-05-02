@@ -8,7 +8,6 @@ class ProductosProvider {
   final String _url = 'https://flutter-curso-5f131-default-rtdb.firebaseio.com';
 
   Future<bool> crearProducto(ProductoModel producto) async {
-
     // https://flutter-curso-5f131-default-rtdb.firebaseio.com/productos
     final url = '$_url/productos.json';
 
@@ -17,5 +16,28 @@ class ProductosProvider {
 
     print(decodedDaata);
     return true;
+  }
+
+  Future<List<ProductoModel>> cargarProductos() async {
+    // https://flutter-curso-5f131-default-rtdb.firebaseio.com/productos
+    final url = '$_url/productos.json';
+
+    final resp = await http.get(url);
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    final List<ProductoModel> productos = List();
+
+    if (decodedData == null) return [];
+
+    decodedData.forEach((key, value) {
+      // print(key);
+      // print(value);
+      final prodTemp = ProductoModel.fromJson(value);
+      prodTemp.id = key;
+      productos.add(prodTemp);
+    });
+
+    print(productos.first.id);
+
+    return productos;
   }
 }
