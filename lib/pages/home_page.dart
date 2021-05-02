@@ -35,8 +35,30 @@ class HomePage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-        return Container();
+        List<ProductoModel> productos = snapshot.data;
+
+        return ListView.builder(
+          itemCount: productos.length,
+          itemBuilder: (context, i) => _crearItem(context, productos[i]),
+        );
       },
+    );
+  }
+
+  Widget _crearItem(BuildContext context, ProductoModel prod) {
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        color: Colors.red,
+      ),
+      onDismissed: (direction) {
+        // TODO: Borrar item
+      },
+      child: ListTile(
+        title: Text('${prod.titulo} - ${prod.precio}'),
+        subtitle: Text('${prod.id}'),
+        onTap: () => Navigator.pushNamed(context, 'producto'),
+      ),
     );
   }
 }
