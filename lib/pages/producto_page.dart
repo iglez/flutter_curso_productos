@@ -170,7 +170,13 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _mostrarFoto() {
     if (producto.fotoUrl != null) {
-      return Container();
+      return FadeInImage(
+        placeholder: AssetImage('assets/jar-loading.gif'), 
+        image: NetworkImage(producto.fotoUrl),
+        height: 300.0,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      );
     }
 
     return Image(
