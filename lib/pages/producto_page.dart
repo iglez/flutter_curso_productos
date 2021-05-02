@@ -195,5 +195,23 @@ class _ProductoPageState extends State<ProductoPage> {
     setState(() {});
   }
 
-  _tomarFoto() {}
+  _tomarFoto() async {
+    final pickedFile = await _picker.getImage(
+      source: ImageSource.camera,
+    );
+
+    if (pickedFile != null) {
+      _foto = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+      return;
+    }
+
+    if (_foto == null) {
+      producto.fotoUrl = null;
+    }
+
+    setState(() {});
+  }
+  
 }
