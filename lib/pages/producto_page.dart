@@ -18,6 +18,8 @@ class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final scapffoldKey = GlobalKey<ScaffoldState>();
   final prodProvider = new ProductosProvider();
+
+  final _picker = ImagePicker();
   File _foto;
 
   ProductoModel producto = ProductoModel();
@@ -175,8 +177,6 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   _seleccionarFoto() async {
-    final _picker = ImagePicker();
-
     final pickedFile = await _picker.getImage(
       source: ImageSource.gallery,
     );
@@ -188,7 +188,7 @@ class _ProductoPageState extends State<ProductoPage> {
       return;
     }
 
-    if (_foto != null) {
+    if (_foto == null) {
       producto.fotoUrl = null;
     }
 
