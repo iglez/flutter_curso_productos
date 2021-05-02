@@ -59,11 +59,30 @@ class _HomePageState extends State<HomePage> {
       onDismissed: (direction) {
         productosProvider.eliminarProducto(prod.id);
       },
-      child: ListTile(
-        title: Text('${prod.titulo} - ${prod.precio}'),
-        subtitle: Text('${prod.id}'),
-        onTap: () => Navigator.pushNamed(context, 'producto', arguments: prod).then((value) => setState(() {})),
+      child: Card(
+        child: Column(
+          children: [
+            (prod.fotoUrl == null)
+            ? Image(image: AssetImage('assets/no-image.png'))
+            : FadeInImage(
+              placeholder: AssetImage('assets/jar-loading.gif'), 
+              image: NetworkImage(prod.fotoUrl),
+              height: 300.0,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            ListTile(
+              title: Text('${prod.titulo} - ${prod.precio}'),
+              subtitle: Text('${prod.id}'),
+              onTap: () => Navigator.pushNamed(context, 'producto', arguments: prod).then((value) => setState(() {})),
+            ),
+          ],
+        ),
       ),
     );
+
+
+
+
   }
 }
