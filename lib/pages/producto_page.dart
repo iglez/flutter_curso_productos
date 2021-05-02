@@ -53,6 +53,7 @@ class _ProductoPageState extends State<ProductoPage> {
             key: formKey,
             child: Column(
               children: [
+                _mostrarFoto(),
                 _crearNombre(),
                 _crearPrecio(),
                 _crearDisponible(),
@@ -159,6 +160,18 @@ class _ProductoPageState extends State<ProductoPage> {
     );
 
     scapffoldKey.currentState.showSnackBar(snackbar);
+  }
+
+  Widget _mostrarFoto() {
+    if (producto.fotoUrl != null) {
+      return Container();
+    }
+
+    return Image(
+      image: AssetImage('assets/no-image.png'),
+      height: 300.0,
+      fit: BoxFit.cover
+    );
   }
 
   _seleccionarFoto() async {
