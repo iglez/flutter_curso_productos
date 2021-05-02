@@ -205,7 +205,7 @@ class _ProductoPageState extends State<ProductoPage> {
       return;
     }
 
-    if (_foto == null) {
+    if (_foto != null) {
       producto.fotoUrl = null;
     }
 
