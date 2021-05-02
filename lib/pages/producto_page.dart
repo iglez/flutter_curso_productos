@@ -168,7 +168,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Image(
-      image: AssetImage('assets/no-image.png'),
+      image: AssetImage(_foto?.path ?? 'assets/no-image.png'),
       height: 300.0,
       fit: BoxFit.cover
     );
