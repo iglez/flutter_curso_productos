@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -60,5 +61,9 @@ class ProductosProvider {
     print(json.decode(resp.body)); // null
 
     return -1;
+  }
+
+  Future<String> subirImagen(File imagen) async {
+    return null;
   }
 }
