@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_curso_productos/models/producto_model.dart';
 import 'package:flutter_curso_productos/providers/productos_provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   // const HomePage({Key key}) : super(key: key);
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final ProductosProvider productosProvider = new ProductosProvider();
 
   @override
@@ -22,7 +27,7 @@ class HomePage extends StatelessWidget {
     return FloatingActionButton(
       child: Icon(Icons.add),
       backgroundColor: Colors.deepPurple,
-      onPressed: () => Navigator.pushNamed(context, 'producto'),
+      onPressed: () => Navigator.pushNamed(context, 'producto').then((value) => setState(() {})),
     );
   }
 
@@ -57,7 +62,7 @@ class HomePage extends StatelessWidget {
       child: ListTile(
         title: Text('${prod.titulo} - ${prod.precio}'),
         subtitle: Text('${prod.id}'),
-        onTap: () => Navigator.pushNamed(context, 'producto', arguments: prod),
+        onTap: () => Navigator.pushNamed(context, 'producto', arguments: prod).then((value) => setState(() {})),
       ),
     );
   }

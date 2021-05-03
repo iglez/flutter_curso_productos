@@ -12,9 +12,11 @@ class ProductoPage extends StatefulWidget {
 
 class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
+  final scapffoldKey = GlobalKey<ScaffoldState>();
   final prodProvider = new ProductosProvider();
 
   ProductoModel producto = ProductoModel();
+  bool _guardando = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Scaffold(
+      key: scapffoldKey,
       appBar: AppBar(
         title: Text('Producto'),
         actions: [
@@ -96,7 +99,7 @@ class _ProductoPageState extends State<ProductoPage> {
       ),
       color: Colors.deepPurple,
       textColor: Colors.white,
-      onPressed: _submit,
+      onPressed: (_guardando) ? null : _submit,
       icon: Icon(Icons.save),
       label: Text('Guardar'),
     );
@@ -115,7 +118,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     bool isValidForm = formKey.currentState.validate();
 
     if (!isValidForm) {
@@ -124,16 +127,32 @@ class _ProductoPageState extends State<ProductoPage> {
 
     formKey.currentState.save();
 
-    print('Listo');
-    print(producto.titulo);
-    print(producto.precio);
-    print(producto.disponible);
+    setState(() {
+      _guardando = true;
+    });
 
-    if( producto.id == null ) {
-      prodProvider.crearProducto(producto);
+    if (producto.id == null) {
+      await prodProvider.crearProducto(producto);
     } else {
-      prodProvider.modificarProducto(producto);
+      await prodProvider.modificarProducto(producto);
     }
-    
+
+    mostrarSnackbar('Registro guardado');
+
+    setState(() {
+      _guardando = false;
+    });
+
+    prodProvider.cargarProductos();
+    Navigator.pop(context);
+  }
+
+  void mostrarSnackbar(String mensaje) {
+    final snackbar = SnackBar(
+      content: Text(mensaje),
+      duration: Duration(milliseconds: 1500),
+    );
+
+    scapffoldKey.currentState.showSnackBar(snackbar);
   }
 }
