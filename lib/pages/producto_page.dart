@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter_curso_productos/models/producto_model.dart';
 import 'package:flutter_curso_productos/providers/productos_provider.dart';
 import 'package:flutter_curso_productos/utils/utils.dart' as utils;
@@ -14,6 +18,9 @@ class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final scapffoldKey = GlobalKey<ScaffoldState>();
   final prodProvider = new ProductosProvider();
+
+  final _picker = ImagePicker();
+  File _foto;
 
   ProductoModel producto = ProductoModel();
   bool _guardando = false;
@@ -33,11 +40,11 @@ class _ProductoPageState extends State<ProductoPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: () {},
+            onPressed: _seleccionarFoto,
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: () {},
+            onPressed: _tomarFoto,
           ),
         ],
       ),
@@ -48,6 +55,7 @@ class _ProductoPageState extends State<ProductoPage> {
             key: formKey,
             child: Column(
               children: [
+                _mostrarFoto(),
                 _crearNombre(),
                 _crearPrecio(),
                 _crearDisponible(),
@@ -155,4 +163,37 @@ class _ProductoPageState extends State<ProductoPage> {
 
     scapffoldKey.currentState.showSnackBar(snackbar);
   }
+
+  Widget _mostrarFoto() {
+    if (producto.fotoUrl != null) {
+      return Container();
+    }
+
+    return Image(
+      image: AssetImage(_foto?.path ?? 'assets/no-image.png'),
+      height: 300.0,
+      fit: BoxFit.cover
+    );
+  }
+
+  _seleccionarFoto() async {
+    final pickedFile = await _picker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      _foto = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+      return;
+    }
+
+    if (_foto == null) {
+      producto.fotoUrl = null;
+    }
+
+    setState(() {});
+  }
+
+  _tomarFoto() {}
 }
