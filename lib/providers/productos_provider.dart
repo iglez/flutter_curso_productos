@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime_type/mime_type.dart';
 
 import 'package:flutter_curso_productos/models/producto_model.dart';
 
@@ -60,5 +63,43 @@ class ProductosProvider {
     print(json.decode(resp.body)); // null
 
     return -1;
+  }
+
+  Future<String> subirImagen(File imagen) async {
+    Uri url = Uri.parse(
+        'https://api.cloudinary.com/v1_1/fluttercurso/image/upload?upload_preset=wgb7irc6');
+
+    List<String> mimeType = mime(imagen.path).split('/'); // imagen/jpg
+
+    // request para adjuntar imagen
+    final imageUploadRequest = http.MultipartRequest('POST', url);
+
+    // crear archivo para adjuntar
+    final file = await http.MultipartFile.fromPath(
+      'file',
+      imagen.path,
+      contentType: MediaType(mimeType.first, mimeType.last),
+    );
+
+    // adjuntar archivo
+    imageUploadRequest.files.add(file);
+
+    // enviar request
+    final streamResponse = await imageUploadRequest.send();
+    // obtener respuesta
+    final resp = await http.Response.fromStream(streamResponse);
+
+    // validar codigo de respuesta
+    if (resp.statusCode != 200 && resp.statusCode != 201) {
+      print('Algo salio mal');
+      print(resp.body);
+      return null;
+    }
+
+    final respData = json.decode(resp.body);
+
+    print(respData);
+
+    return respData['secure_url'];
   }
 }
