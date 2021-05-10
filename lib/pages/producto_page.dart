@@ -139,6 +139,10 @@ class _ProductoPageState extends State<ProductoPage> {
       _guardando = true;
     });
 
+    if (_foto != null) {
+      producto.fotoUrl = await prodProvider.subirImagen(_foto);
+    }
+
     if (producto.id == null) {
       await prodProvider.crearProducto(producto);
     } else {
